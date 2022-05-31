@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Assignment 2</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+
+<body>
+
+  <section class="section">
+    <div class="container">
+      <div class="columns is-multiline">
+        <form class="column is-one-third" action="/submissions" method="POST" onsubmit="postData(this);return false;">
+
+          <h1 class="title">
+            A survey of games
+          </h1>
+          <hr>
+          <p class="introduction">
+            This is a simple survey about the games.
+          </p>
+          <p class="introduction">
+            <strong>Games</strong> can help us to relieve the pressure of study, so I want to investigate the
+            situation of people playing games.
+            The survey asks you to choose your gender, what devices do you like to play games on, and what kinds of
+            games do you like to play.
+          </p>
+          <b>Let's take a survey and check out others picks when you submit the
+            results</b>
+          <hr>
+
+          <div class="field">
+            <label class="label">Name</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="Text input" name="name" required>
+            </div>
+          </div>
+          <hr>
+
+          <div class="field">
+            <label class="label">Gender</label>
+            <div class="control">
+              <label class="radio">
+                <input type="radio" name="gender" value="female">
+                female
+              </label>
+              <label class="radio">
+                <input type="radio" name="gender" value="male">
+                male
+              </label>
+            </div>
+          </div>
+          <hr>
+
+          <div class="field">
+            <label class="label">What device do you use to play the game?</label>
+            <div class="control">
+              <div class="select">
+                <select name="device" required>
+                  <option value="">Select type here</option>
+                  <option value="PC">PC</option>
+                  <option value="MOBILE">MOBILE</option>
+                  <option value="CONSOLE">CONSOLE</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <hr>
+
+          <div class="field">
+            <label class="label">What kind of games do you like best?</label>
+            <div class="control">
+              <div class="select">
+                <select name="game" required>
+                  <option value="">Select the kind of game here</option>
+                  <option value="RPG">RPG</option>
+                  <option value="ARPG">A-RPG</option>
+                  <option value="SRPG">S-RPG</option>
+                  <option value="MOBA">MOBA</option>
+                  <option value="STG">STG</option>
+                  <option value="FPS">FPS</option>
+                  <option value="TPS">TPS</option>
+                  <option value="TCG">TCG</option>
+                  <option value="ACT">ACT</option>
+                  <option value="FTG">FTG</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <hr>
+
+          <div class="field is-grouped">
+            <div class="control">
+              <button type="submit" class="button is-link " name="Submit">Submit</button>
+            </div>
+            <div class="control">
+              <button type="reset" class="button is-link is-light" name="reset">Cancel</button>
+            </div>
+          </div>
+        </form>
+        <div class="column is-mobile">
+          <canvas style="display: block" id="doughnut" ></canvas>
+        </div>
+      </div>
+
+      <div class="columns is-multiline">
+        <div class="column is-mobile">
+          <canvas style="display: block" id="bar" height="280"></canvas>
+        </div>
+
+        <div class="column is-mobile">
+          <canvas style="display: block" id="polarArea" ></canvas>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="javascript/bar.js"></script>
+  <script src="javascript/doughnut.js"></script>
+  <script src="javascript/polarArea.js"></script>
+
+  <script>
+
+    var chartnumofmale = parseInt("<%= chartnumofmale %>");
+    var chartnumoffemale = parseInt("<%= chartnumoffemale %>");
+    var doughnut = [chartnumofmale, chartnumoffemale];
+
+    var chartnumofPC = parseInt("<%= chartnumofPC %>");
+    var chartnumofMOBILE = parseInt("<%= chartnumofMOBILE %>");
+    var chartnumofCONSOLE = parseInt("<%= chartnumofCONSOLE %>");
+    var bar = [chartnumofPC, chartnumofMOBILE, chartnumofCONSOLE];
+
+    var chartnumofRPG = parseInt("<%= chartnumofRPG %>");
+    var chartnumofARPG = parseInt("<%= chartnumofARPG %>");
+    var chartnumofSRPG = parseInt("<%= chartnumofSRPG %>");
+    var chartnumofMOBA = parseInt("<%= chartnumofMOBA %>");
+    var chartnumofSTG = parseInt("<%= chartnumofSTG %>");
+    var chartnumofFPS = parseInt("<%= chartnumofFPS %>");
+    var chartnumofTPS = parseInt("<%= chartnumofTPS %>");
+    var chartnumofTCG = parseInt("<%= chartnumofTCG %>");
+    var chartnumofACT = parseInt("<%= chartnumofACT %>");
+    var chartnumofFTG = parseInt("<%= chartnumofFTG %>");
+    var polarArea = [chartnumofRPG, chartnumofARPG, chartnumofSRPG, chartnumofMOBA, chartnumofSTG, chartnumofFPS, chartnumofFPS, chartnumofTPS, chartnumofTCG, chartnumofACT, chartnumofFTG];
+
+    async function postData(elem) {
+
+      var response = await fetch(elem.action, {
+        method: elem.method,
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(new FormData(elem)),
+      });
+
+      console.log(response);
+
+      if (response.ok) {
+        var data = await response.json();
+
+        // document.getElementById("bar").style.display = 'block';
+        // document.getElementById("doughnut").style.display = 'block';
+        // document.getElementById("polarArea").style.display = 'block';
+        location.reload(true)
+
+      } else {
+        alert(response.status + " " + response.statusCode);
+      }
+
+    }
+  </script>
+
+</body>
+
+</html>

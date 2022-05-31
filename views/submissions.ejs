@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>All Submissions</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <table>
+        <% submissions.forEach( function(submission) { %>
+        
+            <tr>
+            	  <td><%= submission.name %></td>
+                <td><%= submission.gender %></td>
+                <td><%= submission.device %></td>
+                <td><%= submission.game %></td>
+            </tr>
+        
+        <% }); %>
+     </table>
+  </body>
+</html> 

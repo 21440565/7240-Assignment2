@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>All Submissions</title>
+    <!-- <link rel='stylesheet' href='/stylesheets/style.css' /> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
+
+<body>
+    <%= submission.name %>
+    <%= submission.gender %>
+    <%= submission.device %>
+    <%= submission.game %>
+
+<button type="button" class="button is-danger" onclick="deletesubmission('<%= submission.$loki %>')">Delete</button>
+
+<script>
+    async function deletesubmission(id) {
+        var r = confirm("Confirm Delete?");
+        
+        if (r) {
+            var response = await fetch("/submissions/" + id, {
+                method: "DELETE"
+            });
+
+            if (response.ok) {
+                // var html = await response.text();
+                // alert(html);
+                alert("submission deleted.");
+                location.assign("/submissions");
+            } else {
+                alert(response.status + ": " + response.statusText);
+            }
+
+        } else {
+            alert("cancelled");
+        }
+    };
+</script>
+
+
+</body>
+
+</html>

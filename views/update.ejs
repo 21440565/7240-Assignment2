@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Update</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <style>
+        .flex-item {
+            background-color: lightsalmon;
+            height: 50px;
+            width: 150px;
+            line-height: 50px;
+            text-align: center;
+            margin: 5px;
+            flex-grow: 1;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <form class="column is-one-third is-mobile" method="POST"
+                    action="/submissions/update/<%= submission.$loki %>">
+
+                    <h1 class="title">
+                        A survey on NBA team favour
+                    </h1>
+                    <hr>
+                    <p class="introduction">
+                        The National Basketball Association, or <strong>NBA</strong> for short, is a men's professional
+                        basketball league
+                        composed of 30 professional teams in North America. It is one of the four major professional
+                        sports
+                        leagues in the United States.
+                    </p>
+                    <b>Let's take a survey of your favorite NBA teams and check out others picks when you submit the
+                        results</b>
+                    <hr>
+
+                    <div class="field">
+                        <label class="label">Name</label>
+                        <div class="control">
+                            <input value="<%= submission.name %>" class="input" type="text" placeholder="Text input" name="name" required>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="field">
+                        <label class="label">Gender</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" name="gender" value="female">
+                                female
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="gender" value="male">
+                                male
+                            </label>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="field">
+                        <label class="label">What device do you use to play the game?</label>
+                        <div class="control">
+                            <div class="select">
+                                <select value="<%= submission.device %>" name="device" required>
+                                    <option value="">Select type here</option>
+                                    <option value="PC">PC</option>
+                                    <option value="MOBILE">MOBILE</option>
+                                    <option value="CONSOLE">CONSOLE</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <div class="field">
+                        <label class="label">What kind of games do you like best?</label>
+                        <div class="control">
+                            <div class="select">
+                                <select value="<%= submission.game %>" name="game" required>
+                                    <option value="">Select the kind of game here</option>
+                                    <option value="RPG">RPG</option>
+                                    <option value="A-RPG">A-RPG</option>
+                                    <option value="S-RPG">S-RPG</option>
+                                    <option value="MOBA">MOBA</option>
+                                    <option value="STG">STG</option>
+                                    <option value="FPS">FPS</option>
+                                    <option value="TPS">TPS</option>
+                                    <option value="TCG">TCG</option>
+                                    <option value="ACT">ACT</option>
+                                    <option value="FTG">FTG</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- <div class="field">
+                                    <label class="label">Which region is your favorite team in?</label>
+                                    <div class="control">
+                                        <div class="select">
+                                            <select name="region" onchange="teamSelected(this.value)" required>
+                                                <option value="">Select region here</option>
+                                                <option value="ATLANTIC">ATLANTIC</option>
+                                                <option value="CENTRAL">CENTRAL</option>
+                                                <option value="SOUTHEAST">SOUTHEAST</option>
+                                                <option value="NORTHWEST">NORTHWEST</option>
+                                                <option value="PACIFIC">PACIFIC</option>
+                                                <option value="SOUTHWEST">SOUTHWEST</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Team</label>
+                                    <div class="control">
+                                        <div class="select">
+                                            <select name="team" id="team" disabled required>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr> -->
+
+                    <div class="field">
+                        <label class="label">Describe why you love the team</label>
+                        <div class="control">
+                            <textarea class="textarea" placeholder="Textarea" rows="2" name="reason"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-link" name="Submit">Submit</button>
+                        </div>
+                        <div class="control">
+                            <button type="reset" class="button is-link is-light" name="reset">Cancel</button>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="container">
+                    <div class="columns is-one-third is-mobile ">
+                        <div class="column">
+
+                            <canvas id="myChart1" height="280"></canvas>
+
+                        </div>
+                    </div>
+
+                    <div class="columns is-one-third is-mobile ">
+                        <div class="column">
+
+                            <canvas id="myChart2"></canvas>
+
+                        </div>
+                    </div>
+                </div>
+
+    </section>
+
+    <script>
+        // var ATLANTIC = ["Boston Celtics", "Brooklyn Nets", "New York Knicks", "Philadelphia 76ers", "Toronto Rators"];
+        // var CENTRAL = ["Chicago Bulls", "Cleveland Cavaliers", "Detroit Pistons", "Indiana Pacers", "Milwaukee Bucks"];
+        // var SOUTHEAST = ["Atlanta Hawks", "Charlotte Hornets", "Miami Heat", "Orlando Magic", "Washington Wizards"];
+        // var NORTHWEST = ["Denver Nuggets", "Minnesota Timberwolves", "Oklahoma City Thunder", "Portland Trail Blazers", "Utah Jazz"];
+        // var PACIFIC = ["Golden State Warriors", "LA Clippers", "Los Angeles Lakers", "Phoenix Suns", "Sacramento Kings"];
+        // var SOUTHWEST = ["Dallas Mavericks", "Houston Rockets", "Memphis Grizzlies", "New Orleans Pelicans", "San Antonio Spurs"];
+
+        // function teamSelected(region) {
+
+        //     var teamElem = document.getElementById("team");
+        //     teamElem.options.length = 0;
+
+        //     if (region == "ATLANTIC") {
+
+        //         ATLANTIC.forEach(function (item) {
+        //             var option = document.createElement("option");
+        //             option.text = item;
+        //             option.value = item;
+        //             teamElem.add(option);
+        //         });
+
+        //         teamElem.disabled = false;
+
+        //     } else if (region == "CENTRAL") {
+
+        //         CENTRAL.forEach(function (item) {
+        //             var option = document.createElement("option");
+        //             option.text = item;
+        //             option.value = item;
+        //             team.add(option);
+        //         });
+
+        //         team.disabled = false;
+
+        //     }
+        //     else if (region == "SOUTHEAST") {
+
+        //         SOUTHEAST.forEach(function (item) {
+        //             var option = document.createElement("option");
+        //             option.text = item;
+        //             option.value = item;
+        //             teamElem.add(option);
+        //         });
+
+        //         teamElem.disabled = false;
+
+        //     } else if (region == "NORTHWEST") {
+
+        //         NORTHWEST.forEach(function (item) {
+        //             var option = document.createElement("option");
+        //             option.text = item;
+        //             option.value = item;
+        //             teamElem.add(option);
+        //         });
+
+        //         teamElem.disabled = false;
+
+        //     } else if (region == "PACIFIC") {
+
+        //         PACIFIC.forEach(function (item) {
+        //             var option = document.createElement("option");
+        //             option.text = item;
+        //             option.value = item;
+        //             teamElem.add(option);;
+        //         });
+
+        //         teamElem.disabled = false;
+
+        //     } else if (region == "SOUTHWEST") {
+
+        //         SOUTHWEST.forEach(function (item) {
+        //             var option = document.createElement("option");
+        //             option.text = item;
+        //             option.value = item;
+        //             teamElem.add(option);
+        //         });
+
+        //         teamElem.disabled = false;
+        //     }
+        //     else {
+
+        //         teamElem.disabled = true;
+        //     }
+
+        // }
+
+        // document.querySelector("option[value='<%= submission.region %>']").selected = true;
+        // teamSelected('<%= submission.region %>')
+        // document.querySelector("option[value='<%= submission.team %>']").selected = true;
+        // document.querySelector("input[value='<%= submission.gender %>]").checked = true;
+        
+
+        document.querySelector("input[value='<%= submission.gender %>]").checked = true;
+        document.querySelector("option[value='<%= submission.device %>']").selected = true;
+        document.querySelector("option[value='<%= submission.game %>']").selected = true;
+        
+
+
+
+    </script>
+    
+    
+
+</body>
+
+</html>
